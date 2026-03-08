@@ -1,0 +1,81 @@
+:root {
+  --primary: #8a2be2;
+  --secondary: #4b0082;
+  --accent: #00ffff;
+  --bg: #0a0a1a;
+  --panel: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.glass-panel {
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.terminal-box {
+  background: #000;
+  color: #00ff00;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 10px;
+  border-radius: 8px;
+  height: 200px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.report-container h1, .report-container h2, .report-container h3 {
+  color: var(--accent);
+}
+
+.report-container {
+  line-height: 1.6;
+}
+
+.glow-button {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+}
+
+.glow-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(138, 43, 226, 0.6);
+}
+
+.glow-button:disabled {
+  background: #444;
+  box-shadow: none;
+  cursor: not_allowed;
+}
+
+input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
+  width: 100%;
+  max-width: 400px;
+  outline: none;
+}
+
+input:focus {
+  border-color: var(--accent);
+}
