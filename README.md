@@ -1,42 +1,77 @@
-# OpenClaw Research Agent - Usage Guide
+# OpenClaw Research Agent
 
-This agent is an autonomous internet exploration tool built on the OpenClaw architecture. It researches founders or CEOs, maintains a local memory, and generates structured reports.
+An **autonomous AI research agent** that takes a founder or CEO's name, searches the internet, reasons over gathered content, and produces a structured intelligence report — with persistent local memory between runs.
 
-## Prerequisites
+---
 
-1.  **Python 3.8+**
-2.  **Dependencies**:
-    ```bash
-    pip install requests beautifulsoup4 python-dotenv
-    ```
-3.  **API Key**: Ensure your `.env` file contains a valid `GROQ_API_KEY` or `OPENAI_API_KEY`.
+## Highlights
 
-## Running the Agent
+- Built a **multi-stage autonomous agent pipeline** — search → browse → reason → store → report — using a modular architecture (Gateway, Skills, Brain)
+- Integrated **Groq and OpenAI LLM backends** as swappable reasoning engines via a unified `Brain` abstraction in `openclaw/brain.py`
+- Implemented **persistent local memory** using Markdown files, allowing the agent to accumulate and reference prior findings across sessions
+- Used **BeautifulSoup4** for web content extraction and **Requests** for source fetching, with structured fact parsing before LLM reasoning
+- Designed for **CLI-first usage** — single command execution with named output files per subject for easy review and comparison
 
-To start a research task, run the `research_agent.py` script and provide the name of the person you want to research in quotes:
+---
 
-```powershell
-python research_agent.py "Sam Altman"
+## Tech Stack
+
+| Component | Technology |
+|---|---|
+| Language | Python 3.8+ |
+| LLM Backend | Groq API / OpenAI API (swappable) |
+| Web Scraping | Requests, BeautifulSoup4 |
+| Config | python-dotenv |
+| Memory | Local Markdown file store |
+
+---
+
+## Agent Architecture
+
+```
+Gateway          ← Session init, orchestration
+  └── Skills     ← Web search + content fetching (BeautifulSoup4)
+  └── Brain      ← LLM reasoning layer (Groq / OpenAI)
+  └── Memory     ← Persistent Markdown knowledge store
+  └── Reporter   ← Structured report generation
 ```
 
-### Examples:
-- `python research_agent.py "Elon Musk"`
-- `python research_agent.py "Jensen Huang"`
-- `python research_agent.py "Satya Nadella"`
+---
 
-## Understanding the Output
+## Setup
 
-As the agent runs, it will:
-1.  **Initialize**: Start a session via the `Gateway`.
-2.  **Search & Browse**: Find sources and fetch content using `Skills`.
-3.  **Think**: Use the `Brain` (via Groq/OpenAI) to reason about the gathered information.
-4.  **Store**: Save "facts" into the local `memory/knowledge/` directory in Markdown format.
-5.  **Finalize**: Generate a comprehensive report in the `output/` directory.
+```bash
+pip install requests beautifulsoup4 python-dotenv
+```
 
-### Key Files:
-- **Memory**: `memory/knowledge/[name].md` (RAW findings)
-- **Final Report**: `output/[name]_report.md` (Structured insights)
+Create a `.env` file:
+```
+GROQ_API_KEY=your_key_here
+# or
+OPENAI_API_KEY=your_key_here
+```
+
+---
+
+## Usage
+
+```bash
+python research_agent.py "Sam Altman"
+python research_agent.py "Jensen Huang"
+python research_agent.py "Satya Nadella"
+```
+
+---
+
+## Output
+
+| File | Contents |
+|---|---|
+| `memory/knowledge/[name].md` | Raw extracted facts, updated per run |
+| `output/[name]_report.md` | Final structured research report |
+
+---
 
 ## Customization
 
-You can modify the `Brain` model or endpoint in `openclaw/brain.py` if you wish to use different LLM providers.
+Swap LLM providers by editing `openclaw/brain.py` — the Brain abstraction supports any OpenAI-compatible endpoint.
