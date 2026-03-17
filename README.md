@@ -1,5 +1,5 @@
 # OpenClaw Research Agent
-
+.
 An **autonomous AI research agent** that takes a founder or CEO's name, searches the internet, reasons over gathered content, and produces a structured intelligence report — with persistent local memory between runs.
 
 ---
